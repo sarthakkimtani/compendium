@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "imports": {
-    "#/*": "./src/*"
+    "@/*": "./src/*"
   },
   "scripts": {
     "dev": "vite dev --port 3000",
@@ -15,20 +15,15 @@
     "build": "vite build",
     "preview": "vite preview",
     "deploy": "pnpm run build && wrangler deploy",
-    "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate",
-    "db:push": "drizzle-kit push",
-    "db:pull": "drizzle-kit pull",
-    "db:studio": "drizzle-kit studio"
+    "cf:typegen": "wrangler types"
   },
   "dependencies": {
+    "@clerk/tanstack-react-start": "^1.6.1",
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-devtools": "latest",
     "@tanstack/react-router": "latest",
     "@tanstack/react-router-devtools": "latest",
     "@tanstack/react-start": "latest",
-    "better-auth": "^1.5.3",
-    "better-sqlite3": "^12.6.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "drizzle-kit": "^0.31.9",
@@ -46,18 +41,17 @@
     "@tailwindcss/typography": "^0.5.16",
     "@tanstack/devtools-vite": "latest",
     "@tanstack/router-cli": "^1.132.0",
-    "@types/better-sqlite3": "^7.6.0",
     "@types/node": "^22.10.2",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-react": "^6.0.1",
     "babel-plugin-react-compiler": "^1.0.0",
-    "dotenv": "^17.3.1",
     "oxfmt": "^0.66.0",
     "oxlint": "^1.81.0",
     "tsx": "^4.21.0",
     "typescript": "^6.0.2",
     "vite": "^8.0.0",
     "wrangler": "^4.70.0"
-  }
+  },
+  "packageManager": "pnpm@11.3.0"
 }
