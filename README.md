@@ -38,7 +38,7 @@ This project uses the Cloudflare Vite plugin (configured in `vite.config.ts`) an
 2. Authenticate: `wrangler login`
 3. Deploy: `npx wrangler deploy`
 
-For production env vars, run `wrangler secret put MY_VAR` for each secret listed in `.env.example`. Public (non-secret) vars go in `wrangler.jsonc` under `vars`.
+For production, set `CLERK_SECRET_KEY` with `wrangler secret put CLERK_SECRET_KEY`. Configure the public `VITE_CLERK_PUBLISHABLE_KEY` in `wrangler.jsonc` under `vars`. The Cloudflare account, database, and D1 token values in `.env.example` are for local Drizzle CLI commands and should not be added as Worker secrets.
 
 KV, D1, R2, and Durable Object bindings are configured in `wrangler.jsonc` — see https://developers.cloudflare.com/workers/wrangler/configuration/.
 
@@ -50,37 +50,29 @@ Add components using the latest version of [Shadcn](https://ui.shadcn.com/).
 pnpm dlx shadcn@latest add button
 ```
 
-## Setting up Better Auth
+## Authentication and database setup
 
-1. Generate and set the `BETTER_AUTH_SECRET` environment variable in your `.env.local`:
-
-   ```bash
-   pnpm dlx @better-auth/cli secret
-   ```
-
-2. Visit the [Better Auth documentation](https://www.better-auth.com) to unlock the full potential of authentication in your app.
-
-### Adding a Database (Optional)
-
-Better Auth can work in stateless mode, but to persist user data, add a database:
-
-```typescript
-// src/lib/auth.ts
-import { betterAuth } from "better-auth";
-import { Pool } from "pg";
-
-export const auth = betterAuth({
-  database: new Pool({
-    connectionString: process.env.DATABASE_URL,
-  }),
-  // ... rest of config
-});
-```
-
-Then run migrations:
+Authentication uses Clerk. Create an application in the [Clerk Dashboard](https://dashboard.clerk.com/), then copy its publishable key and secret key into `.env.local`:
 
 ```bash
-pnpm dlx @better-auth/cli migrate
+cp .env.example .env.local
+```
+
+Set `VITE_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY` in that file. The sign-in and sign-up pages use Clerk's Google and GitHub OAuth strategies; enable those providers in the Clerk Dashboard if you want to use them.
+
+The app uses Cloudflare D1. The database binding is configured in `wrangler.jsonc`. For Drizzle commands, set `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_DATABASE_ID`, and `CLOUDFLARE_D1_TOKEN` in `.env.local`, then export those values in your shell before running the CLI:
+
+```bash
+set -a
+source .env.local
+set +a
+```
+
+Generate migration files from the schema and apply them to the configured D1 database with:
+
+```bash
+pnpm exec drizzle-kit generate
+pnpm exec drizzle-kit migrate
 ```
 
 ## Routing
