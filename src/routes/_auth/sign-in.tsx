@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { AuthFooter, AuthHeader, AuthLink } from "@/components/auth/auth-ui";
+import { AuthLink } from "@/components/auth/auth-controls";
+import { AuthFooter, AuthHeader } from "@/components/auth/auth-layout";
 import { OAuthButtons } from "@/components/auth/oauth-buttons";
 
 export const Route = createFileRoute("/_auth/sign-in")({

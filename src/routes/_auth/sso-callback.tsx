@@ -2,7 +2,7 @@ import { AuthenticateWithRedirectCallback } from "@clerk/tanstack-react-start";
 import { createFileRoute } from "@tanstack/react-router";
 import { LoaderCircle } from "lucide-react";
 
-import { AuthHeader } from "@/components/auth/auth-ui";
+import { AuthHeader } from "@/components/auth/auth-layout";
 
 export const Route = createFileRoute("/_auth/sso-callback")({
   head: () => ({ meta: [{ title: "Signing in - Compendium" }] }),

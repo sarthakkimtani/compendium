@@ -6,8 +6,7 @@ import { useFormStatus } from "react-dom";
 
 import githubLogo from "@/assets/logos/github.svg";
 import googleLogo from "@/assets/logos/google.svg";
-import { AuthButton, AuthError } from "@/components/auth/auth-ui";
-import { AFTER_AUTH_PATH, SSO_CALLBACK_PATH, errorText } from "@/lib/clerk";
+import { AuthButton, AuthError } from "@/components/auth/auth-controls";
 
 type OAuthProvider = {
   id: string;
@@ -55,13 +54,13 @@ export const OAuthButtons = ({ flow }: { flow: "signIn" | "signUp" }) => {
 
     const params = {
       strategy: provider.strategy,
-      redirectUrl: AFTER_AUTH_PATH,
-      redirectCallbackUrl: SSO_CALLBACK_PATH,
+      redirectUrl: "/",
+      redirectCallbackUrl: "/sso-callback",
     };
     const { error } = flow === "signIn" ? await signIn.sso(params) : await signUp.sso(params);
 
     return error
-      ? { redirectingTo: null, error: errorText(error) }
+      ? { redirectingTo: null, error: error.message }
       : { redirectingTo: provider.id, error: null };
   }, initialState);
 
