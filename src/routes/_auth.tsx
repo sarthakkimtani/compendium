@@ -9,8 +9,10 @@ type AuthSearch = {
 export const Route = createFileRoute("/_auth")({
   validateSearch: (search): AuthSearch =>
     search.error === "sso_incomplete" ? { error: "sso_incomplete" } : {},
-  beforeLoad: ({ context }) => {
-    if (context.userId) throw redirect({ to: "/" });
+  beforeLoad: ({ context, location }) => {
+    if (context.userId && location.pathname !== "/sso-callback") {
+      throw redirect({ to: "/" });
+    }
   },
   component: AuthLayout,
 });
