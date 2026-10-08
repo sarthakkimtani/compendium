@@ -2,12 +2,13 @@ import { createLink } from "@tanstack/react-router";
 import { LoaderCircle } from "lucide-react";
 import type { ComponentProps, ReactNode } from "react";
 
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const focusRing =
   "focus-visible:outline-[1.5px] focus-visible:outline-offset-2 focus-visible:outline-teal-ring";
 
-type AuthButtonProps = ComponentProps<"button"> & {
+type AuthButtonProps = Omit<ComponentProps<typeof Button>, "variant"> & {
   variant?: "primary" | "secondary";
   icon?: ReactNode;
   pending?: boolean;
@@ -21,7 +22,8 @@ export const AuthButton = ({
   children,
   ...props
 }: AuthButtonProps) => (
-  <button
+  <Button
+    variant={variant === "primary" ? "default" : "outline"}
     aria-busy={pending || undefined}
     className={cn(
       "flex w-full cursor-pointer items-center justify-center gap-2.5 rounded-control text-[14.5px] font-medium transition-colors disabled:cursor-default",
@@ -40,7 +42,7 @@ export const AuthButton = ({
       icon
     )}
     {children}
-  </button>
+  </Button>
 );
 
 export const AuthError = ({ children }: { children: ReactNode }) =>

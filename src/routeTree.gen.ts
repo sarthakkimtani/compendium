@@ -14,6 +14,7 @@ import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as AuthSignInRouteImport } from './routes/_auth/sign-in'
 import { Route as AuthSignUpRouteImport } from './routes/_auth/sign-up'
 import { Route as AuthSsoCallbackRouteImport } from './routes/_auth/sso-callback'
+import { Route as BoardBoardIdRouteImport } from './routes/board.$boardId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -39,18 +40,25 @@ const AuthSsoCallbackRoute = AuthSsoCallbackRouteImport.update({
   path: '/sso-callback',
   getParentRoute: () => AuthRoute,
 } as any)
+const BoardBoardIdRoute = BoardBoardIdRouteImport.update({
+  id: '/board/$boardId',
+  path: '/board/$boardId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/sign-in': typeof AuthSignInRoute
   '/sign-up': typeof AuthSignUpRoute
   '/sso-callback': typeof AuthSsoCallbackRoute
+  '/board/$boardId': typeof BoardBoardIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/sign-in': typeof AuthSignInRoute
   '/sign-up': typeof AuthSignUpRoute
   '/sso-callback': typeof AuthSsoCallbackRoute
+  '/board/$boardId': typeof BoardBoardIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -59,12 +67,13 @@ export interface FileRoutesById {
   '/_auth/sign-in': typeof AuthSignInRoute
   '/_auth/sign-up': typeof AuthSignUpRoute
   '/_auth/sso-callback': typeof AuthSsoCallbackRoute
+  '/board/$boardId': typeof BoardBoardIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/sign-in' | '/sign-up' | '/sso-callback'
+  fullPaths: '/' | '/sign-in' | '/sign-up' | '/sso-callback' | '/board/$boardId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/sign-in' | '/sign-up' | '/sso-callback'
+  to: '/' | '/sign-in' | '/sign-up' | '/sso-callback' | '/board/$boardId'
   id:
     | '__root__'
     | '/'
@@ -72,11 +81,13 @@ export interface FileRouteTypes {
     | '/_auth/sign-in'
     | '/_auth/sign-up'
     | '/_auth/sso-callback'
+    | '/board/$boardId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRouteWithChildren
+  BoardBoardIdRoute: typeof BoardBoardIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -116,6 +127,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSsoCallbackRouteImport
       parentRoute: typeof AuthRoute
     }
+    '/board/$boardId': {
+      id: '/board/$boardId'
+      path: '/board/$boardId'
+      fullPath: '/board/$boardId'
+      preLoaderRoute: typeof BoardBoardIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -136,6 +154,7 @@ const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRouteWithChildren,
+  BoardBoardIdRoute: BoardBoardIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
