@@ -108,7 +108,9 @@ export function BoardDialogs({
             </p>
           )}
           <AlertDialogFooter className="mt-7 gap-3">
-            <AlertDialogCancel className="h-9 px-3 text-xs">Cancel</AlertDialogCancel>
+            <AlertDialogCancel disabled={busy} className="h-9 px-3 text-xs">
+              Cancel
+            </AlertDialogCancel>
             <AlertDialogAction
               variant="destructive"
               className="h-9 px-3 text-xs"

@@ -103,7 +103,12 @@ export const Boards = ({
           )}
 
           {initialBoards.length ? (
-            <BoardGrid boards={initialBoards} onDelete={setDeletingBoard} />
+            <BoardGrid
+              boards={initialBoards}
+              onDelete={(board) => {
+                if (!busy) setDeletingBoard(board);
+              }}
+            />
           ) : (
             <BoardEmptyState onCreate={openCreateDialog} />
           )}
@@ -117,7 +122,7 @@ export const Boards = ({
           onCreate={handleCreate}
           deletingBoard={deletingBoard}
           onDeleteOpenChange={(open) => {
-            if (!open) setDeletingBoard(null);
+            if (!open && !busy) setDeletingBoard(null);
           }}
           onDelete={handleDelete}
         />
