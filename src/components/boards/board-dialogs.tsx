@@ -61,7 +61,11 @@ export function BoardDialogs({
               Name a board to open its canvas.
             </DialogDescription>
           </DialogHeader>
+          <label htmlFor="board-name" className="sr-only">
+            Board name
+          </label>
           <input
+            id="board-name"
             autoFocus
             maxLength={80}
             value={title}
