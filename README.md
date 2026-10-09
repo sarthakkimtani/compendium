@@ -68,6 +68,13 @@ source .env.local
 set +a
 ```
 
+Before starting the app locally, apply migrations to Wrangler's local D1 database:
+
+```bash
+pnpm run db:migrate:local
+pnpm dev
+```
+
 Generate migration files from the schema and apply them to the configured D1 database with:
 
 ```bash

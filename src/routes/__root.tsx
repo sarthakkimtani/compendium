@@ -1,12 +1,10 @@
 import { ClerkProvider } from "@clerk/tanstack-react-start";
-import { TanStackDevtools } from "@tanstack/react-devtools";
 import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
-import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import type { ReactNode } from "react";
 
 import { getAuthState } from "@/lib/auth";
 
-import appCss from "../styles.css?url";
+import appCss from "@/styles.css?url";
 
 export const Route = createRootRoute({
   beforeLoad: async () => {
@@ -33,10 +31,6 @@ function RootDocument({ children }: { children: ReactNode }) {
         </head>
         <body>
           {children}
-          <TanStackDevtools
-            config={{ position: "bottom-right" }}
-            plugins={[{ name: "Tanstack Router", render: <TanStackRouterDevtoolsPanel /> }]}
-          />
           <Scripts />
         </body>
       </html>

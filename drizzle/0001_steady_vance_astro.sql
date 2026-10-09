@@ -1,0 +1,1 @@
+CREATE INDEX `boards_owner_updated_idx` ON `boards` (`owner_id`,`updated_at`);

@@ -16,3 +16,5 @@ export const getViewer = createServerFn({ method: "GET" }).handler(async () => {
     imageUrl: user.imageUrl,
   };
 });
+
+export type Viewer = NonNullable<Awaited<ReturnType<typeof getViewer>>>;

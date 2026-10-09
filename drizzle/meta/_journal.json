@@ -1,0 +1,20 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1791371188665,
+      "tag": "0000_cloudy_fenris",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1791546843814,
+      "tag": "0001_steady_vance_astro",
+      "breakpoints": true
+    }
+  ]
+}
